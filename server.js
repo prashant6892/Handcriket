@@ -19,7 +19,6 @@ const PAYOUT = { blue: 1.98, red: 1.98, tie: 5.94, odd: 1.98, even: 1.98, over: 
 const app = express();
 const server = http.createServer(app);
 const io = new Server(server);
-
 app.use(express.static(path.join(__dirname, 'public')));
 
 // ICE servers for WebRTC. STUN works for most home networks; add a TURN server
