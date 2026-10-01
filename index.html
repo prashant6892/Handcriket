@@ -1,0 +1,155 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover, user-scalable=no" />
+  <meta name="theme-color" content="#070b1f" />
+  <title>HandCricket</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700;900&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <div class="stadium" aria-hidden="true"><div class="lights"></div><div class="crowd"></div></div>
+
+  <main id="app" class="app">
+    <!-- ===== Header ===== -->
+    <header class="topbar">
+      <div class="chips">
+        <div class="chip chip-balance" id="balance">1000</div>
+        <div class="chip chip-name" id="username">Player</div>
+      </div>
+      <h1 class="title">HandCricket</h1>
+      <div class="icon-btns">
+        <button class="icon-btn" id="callBtn" title="Audio / video call" aria-label="Audio / video call">
+          <svg viewBox="0 0 24 24"><path d="M15 8.5V7a2 2 0 0 0-2-2H4a2 2 0 0 0-2 2v10a2 2 0 0 0 2 2h9a2 2 0 0 0 2-2v-1.5l5 3.5V5z" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/></svg>
+        </button>
+        <button class="icon-btn" id="fsBtn" title="Fullscreen" aria-label="Fullscreen"><span class="brackets">[ ]</span></button>
+        <button class="icon-btn" id="menuBtn" title="Menu" aria-label="Menu">
+          <svg viewBox="0 0 24 24"><path d="M4 6h16M4 12h16M4 18h16" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"/></svg>
+        </button>
+      </div>
+    </header>
+
+    <div class="progress"><div class="progress-fill" id="progress"></div></div>
+
+    <!-- ===== Video call strip ===== -->
+    <div class="call-dock hidden" id="callDock">
+      <div class="tiles" id="tiles"></div>
+      <div class="call-ctrls">
+        <button class="cc" id="micBtn" title="Mute / unmute">
+          <svg viewBox="0 0 24 24"><rect x="9" y="3" width="6" height="11" rx="3" fill="currentColor"/><path d="M5 11a7 7 0 0 0 14 0M12 18v3" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round"/><line class="slash" x1="4" y1="4" x2="20" y2="20" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"/></svg>
+        </button>
+        <button class="cc" id="camBtn" title="Camera on / off">
+          <svg viewBox="0 0 24 24"><path d="M15 9V7a2 2 0 0 0-2-2H4a2 2 0 0 0-2 2v10a2 2 0 0 0 2 2h9a2 2 0 0 0 2-2v-2l5 3.5v-11z" fill="currentColor"/><line class="slash" x1="3" y1="3" x2="21" y2="21" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"/></svg>
+        </button>
+        <button class="cc" id="flipBtn" title="Switch camera">
+          <svg viewBox="0 0 24 24"><path d="M4 12a8 8 0 0 1 14-5.3M20 12a8 8 0 0 1-14 5.3M18 3v4h-4M6 21v-4h4" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </button>
+        <button class="cc cc-end" id="endBtn" title="Leave call">
+          <svg viewBox="0 0 24 24"><path d="M3 14.5c5-5 13-5 18 0l-2.5 2.5-3.5-2v-2.5a10 10 0 0 0-6 0V15l-3.5 2z" fill="currentColor"/></svg>
+        </button>
+      </div>
+    </div>
+
+    <!-- ===== Arena ===== -->
+    <section class="arena">
+      <div class="fist fist-blue" id="fistBlue"><div class="fist-num" id="numBlue"></div></div>
+      <div class="vs-wrap">
+        <div class="vs-num" id="centerNum">0</div>
+        <div class="vs-circle">VS</div>
+        <div class="vs-cap" id="centerCap">&nbsp;</div>
+      </div>
+      <div class="fist fist-red" id="fistRed"><div class="fist-num" id="numRed"></div></div>
+    </section>
+
+    <div class="round-pill">RoundId: <span id="roundId">—</span></div>
+
+    <!-- ===== Bet panel ===== -->
+    <section class="panel">
+      <div class="label">WINNER</div>
+      <div class="row row-3">
+        <button class="mkt mkt-blue" data-m="blue"><span class="mk-name">Blue</span><span class="mk-x">1.98x</span><i class="stake"></i></button>
+        <button class="mkt mkt-tie" data-m="tie"><span class="mk-name">Tie</span><span class="mk-x">5.94x</span><i class="stake"></i></button>
+        <button class="mkt mkt-red" data-m="red"><span class="mk-name">Red</span><span class="mk-x">1.98x</span><i class="stake"></i></button>
+      </div>
+
+      <div class="label">TOTALSUM</div>
+      <div class="row row-2">
+        <button class="mkt mkt-odd" data-m="odd"><span class="mk-name">Odd</span><span class="mk-x">1.98x</span><i class="stake"></i></button>
+        <button class="mkt mkt-even" data-m="even"><span class="mk-name">Even</span><span class="mk-x">1.98x</span><i class="stake"></i></button>
+        <button class="mkt mkt-over tall" data-m="over"><span class="mk-name">Over 7</span><span class="mk-x">1.98x</span><i class="stake"></i></button>
+        <button class="mkt mkt-under tall" data-m="under"><span class="mk-name">Under 7</span><span class="mk-x">1.98x</span><i class="stake"></i></button>
+      </div>
+
+      <div class="label">BETAMOUNT</div>
+      <div class="amount-box">
+        <div class="amt-chips">
+          <button class="amt-chip active" data-a="50">50</button>
+          <button class="amt-chip" data-a="100">100</button>
+          <button class="amt-chip" data-a="500">500</button>
+          <button class="amt-chip" data-a="1000">1000</button>
+        </div>
+        <div class="amt-edit">
+          <button class="amt-chip" id="halfBtn">½</button>
+          <input id="amountInput" class="amt-input" type="number" inputmode="decimal" min="1" value="50" />
+          <button class="amt-chip" id="dblBtn">×2</button>
+        </div>
+      </div>
+
+      <button class="place" id="placeBtn" disabled>PLACE BET · 50</button>
+    </section>
+  </main>
+
+  <!-- ===== Menu drawer ===== -->
+  <div class="scrim hidden" id="scrim"></div>
+  <aside class="drawer" id="drawer" aria-hidden="true">
+    <div class="drawer-head">
+      <div>
+        <div class="d-label">ROOM CODE</div>
+        <div class="room-code" id="roomCode">—</div>
+      </div>
+      <button class="icon-btn" id="closeDrawer" aria-label="Close">✕</button>
+    </div>
+    <button class="btn-gold" id="inviteBtn">Copy invite link</button>
+    <button class="btn-ghost" id="fsBtn2">Toggle fullscreen</button>
+
+    <div class="d-label">PLAYERS</div>
+    <ul class="players" id="players"></ul>
+
+    <div class="d-label">LAST RESULTS</div>
+    <div class="history" id="history"></div>
+
+    <div class="d-label">RULES</div>
+    <div class="rules">
+      <p>Each round, Blue and Red each throw a hand from 1 to 6. You have 15 seconds to place your bets.</p>
+      <p><b>Winner:</b> the higher hand wins (1.98x). <b>Tie</b> pays 5.94x. If the hands tie, Blue and Red bets are refunded.</p>
+      <p><b>Total sum:</b> Odd or Even (1.98x). Over 7 means 8 to 12, and Under 7 means 2 to 6. A total of exactly 7 refunds Over/Under bets.</p>
+      <p>Coins are virtual and only for fun.</p>
+    </div>
+    <button class="btn-ghost" id="refillBtn">Refill coins (below 50)</button>
+    <button class="btn-ghost danger" id="leaveBtn">Leave room</button>
+  </aside>
+
+  <!-- ===== Lobby ===== -->
+  <div class="lobby" id="lobby">
+    <div class="lobby-card">
+      <h1 class="title big">HandCricket</h1>
+      <p class="sub">Play with friends anywhere, and talk over live video while you play.</p>
+      <label class="field"><span>Your name</span><input id="nameInput" maxlength="18" placeholder="e.g. Raj" autocomplete="nickname" /></label>
+      <button class="place live" id="createBtn">CREATE ROOM</button>
+      <div class="or"><span>or join a friend</span></div>
+      <div class="join-row">
+        <input id="codeInput" maxlength="5" placeholder="ROOM CODE" autocomplete="off" />
+        <button class="btn-gold" id="joinBtn">JOIN</button>
+      </div>
+      <div class="lobby-err" id="lobbyErr"></div>
+    </div>
+  </div>
+
+  <div class="toasts" id="toasts"></div>
+
+  <script src="/socket.io/socket.io.js"></script>
+  <script src="app.js"></script>
+</body>
+</html>
